@@ -239,7 +239,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
               Text("What I Do? ",style: TextStyle(fontSize: 40.0),),
               AnimatedCard(path: "assets/webDev.png", text:"Web Development",width: 300.0,),
               SizedBox(height: 35.0,),
-              AnimatedCard(path: "assets/appDev.webp", text:"App Development",width: 300.0,),
+              AnimatedCard(path: "assets/appDev.png", text:"App Development",width: 300.0,),
               SizedBox(height: 35.0,),
               AnimatedCard(path: "assets/firebase.png", text:"Back-end Development",width: 300.0,),
               SizedBox(height: 35.0,),
