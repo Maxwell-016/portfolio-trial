@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.6
 
   #The following adds google fonts to the application
-  google_fonts: ^6.2.1
+  #google_fonts: ^6.2.1
 
   url_launcher: ^6.3.0
 
