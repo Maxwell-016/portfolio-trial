@@ -32,13 +32,14 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
   }
   @override
   Widget build(BuildContext context) {
+    double widthDevice=MediaQuery.of(context).size.width;
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           size: 35.0,
           color: Colors.black,
         ),
@@ -237,7 +238,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
             ),
           ),
           //What I do, Third Secton
-          Column(
+          const Column(
             children: [
               Text("What I Do? ",style: TextStyle(fontSize: 40.0),),
               AnimatedCard(path: "assets/webDev.png", text:"Web Development",width: 300.0,),
@@ -245,10 +246,35 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
               AnimatedCard(path: "assets/appDev.png", text:"App Development",width: 300.0,),
               SizedBox(height: 35.0,),
               AnimatedCard(path: "assets/firebase.png", text:"Back-end Development",width: 300.0,),
-              SizedBox(height: 35.0,),
             ],
 
-          )
+          ),
+          const SizedBox(height: 90.0,),
+          //Contact, fourth section
+          Wrap(
+            spacing: 20.0,
+            runSpacing: 20.0,
+            alignment: WrapAlignment.center,
+            children: [
+              SizedText(text: "Contact Me", size: 40,),
+              TextForm(label: "First Name", textHint: "Please type first name", width: widthDevice/1.4),
+              TextForm(label: "Last Name", textHint: "Please type last name", width: widthDevice/1.4),
+              TextForm(label: "Email", textHint: "Please type email address", width: widthDevice/1.4),
+              TextForm(label: "Phone Number", textHint: "Please type phone number", width: widthDevice/1.4),
+              TextForm(label: "Message", textHint: "Message", width: widthDevice/1.4,maxLines: 10.0,),
+              MaterialButton(
+                onPressed: (){},
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                height: 60.0,
+                minWidth: widthDevice/2.2,
+                color: Colors.tealAccent,
+                child:const SizedText(size: 20.0,text: "Submit",),
+              )
+            ],
+          ),
+          const SizedBox(height: 90.0,),
         ],
       ),
     );

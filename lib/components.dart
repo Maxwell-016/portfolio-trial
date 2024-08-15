@@ -233,3 +233,45 @@ class _SizedTextState extends State<SizedText> {
     );
   }
 }
+
+class TextForm extends StatefulWidget {
+  final label;
+  final textHint;
+  final width;
+  final maxLines;
+
+  const TextForm({super.key,
+    required this.label,
+    required this.textHint,
+    required this.width,
+    this.maxLines});
+  @override
+  State<TextForm> createState() => _TextFormState();
+}
+class _TextFormState extends State<TextForm> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: widget.width,
+      child: TextField(
+        maxLines: widget.maxLines,
+        decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Colors.tealAccent, width: 2.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Colors.tealAccent, width: 2.0),
+          ),
+          contentPadding: EdgeInsets.all(10.0),
+          label: Text(widget.label),
+          hintText: widget.textHint,
+        ),
+      ),
+    );
+  }
+}
+
+
+
