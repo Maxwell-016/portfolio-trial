@@ -144,12 +144,12 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                           bottomRight: Radius.circular(10.0),
                         )),
                     child: Text(
-                      "Hello there!",
+                      "Hello there! I'm",
                       style: TextStyle(fontSize: 15.0),
                     ),
                   ),
                   Text(
-                    "I'm Maxwell Ndungu",
+                    "Maxwell Ndungu",
                     style: TextStyle(fontSize: 40.0),
                   ),
                   Text(
@@ -197,41 +197,44 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
             height: 90.0,
           ),
           //About me, Second section
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                "About Me",
-                style: TextStyle(fontSize: 40.0),
-              ),
-              const Text(
-                "Hello! I'm Maxwell Ndungu. I specialize in flutter development",
-                style: TextStyle(fontSize: 15.0),
-              ),
-              const Text(
-                "I strive to ensure astounding perfomance with state of ",
-                style: TextStyle(fontSize: 15.0),
-              ),
-              const Text(
-                "the art security for Android, Ios, Web, Mac, Linux",
-                style: TextStyle(fontSize: 15.0),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Wrap(
-                spacing: 7.0,
-                children: [
-                  tealContainer("Flutter"),
-                  tealContainer("Firebase"),
-                  tealContainer("Android"),
-                  tealContainer("Windows"),
-                ],
-              ),
-              const SizedBox(
-                height: 60.0,
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  "About Me",
+                  style: TextStyle(fontSize: 40.0),
+                ),
+                const Text(
+                  "Hello! I'm Maxwell Ndungu. I specialize in flutter development",
+                  style: TextStyle(fontSize: 15.0),
+                ),
+                const Text(
+                  "I strive to ensure astounding perfomance with state of ",
+                  style: TextStyle(fontSize: 15.0),
+                ),
+                const Text(
+                  "the art security for Android, Ios, Web, Mac, Linux",
+                  style: TextStyle(fontSize: 15.0),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Wrap(
+                  spacing: 7.0,
+                  children: [
+                    tealContainer("Flutter"),
+                    tealContainer("Firebase"),
+                    tealContainer("Android"),
+                    tealContainer("Windows"),
+                  ],
+                ),
+                const SizedBox(
+                  height: 60.0,
+                ),
+              ],
+            ),
           ),
           //What I do, Third Secton
           Column(
