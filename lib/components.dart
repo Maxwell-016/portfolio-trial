@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
@@ -20,7 +22,9 @@ class _TabsMobileState extends State<TabsMobile> {
       color: Colors.black,
       height: 50.0,
       minWidth: 200.0,
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pushNamed(widget.route);
+      },
       child: Text(
         widget.text,
         style: const TextStyle(fontSize: 30.0, color: Colors.white),
@@ -53,18 +57,28 @@ class AnimatedCard extends StatefulWidget {
 
 class _AnimatedCardState extends State<AnimatedCard>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 4),
-    vsync: this,
-  )..repeat(reverse: true);
-  late final Animation<Offset> _animation = Tween(
-    begin: const Offset(0, 0),
-    end: const Offset(0, 0.2),
-  ).animate(_controller);
+  late final AnimationController _controller;
+  late final Animation<Offset> _animation;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    )
+      ..repeat(reverse: true)
+      ..addListener(() {
+        if (mounted) setState(() {});
+      });
+    _animation=Tween(begin: const Offset(0,0),end: Offset(0,0.2)).animate(_controller);
+  }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    _controller.stop();
     _controller.dispose();
     super.dispose();
   }
@@ -131,18 +145,28 @@ class AnimatedCardDelayed extends StatefulWidget {
 
 class _AnimatedCardDelayedState extends State<AnimatedCardDelayed>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 5),
-    vsync: this,
-  )..repeat(reverse: true);
-  late final Animation<Offset> _animation = Tween(
-    begin: const Offset(0, 0),
-    end: const Offset(0, 0.2),
-  ).animate(_controller);
+  late final AnimationController _controller;
+  late final Animation<Offset> _animation;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )
+      ..repeat(reverse: true)
+      ..addListener(() {
+        if (mounted) setState(() {});
+      });
+    _animation=Tween(begin: const Offset(0,0),end: Offset(0,0.2)).animate(_controller);
+  }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    _controller.stop();
     _controller.dispose();
     super.dispose();
   }
@@ -186,27 +210,45 @@ class _AnimatedCardDelayedState extends State<AnimatedCardDelayed>
   }
 }
 
-class SpacedText extends StatefulWidget {
+class WebTabs extends StatefulWidget {
   final text;
-  const SpacedText({super.key, required this.text});
+  final route;
+  const WebTabs({super.key, required this.text,required this.route});
 
   @override
-  State<SpacedText> createState() => _SpacedTextState();
+  State<WebTabs> createState() => _WebTabsState();
 }
 
-class _SpacedTextState extends State<SpacedText> {
+class _WebTabsState extends State<WebTabs> {
+  bool isSelected=false;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          widget.text,
-          style: const TextStyle(fontSize: 20.0),
-        ),
-        const SizedBox(
-          width: 50,
-        )
-      ],
+    return GestureDetector(
+      onTap: (){
+        Navigator.of(context).pushNamed(widget.route);
+      },
+      child: MouseRegion(
+        onEnter: (event){
+          setState(() {
+            isSelected=true;
+          });
+        },
+        onExit: (event){
+          setState(() {
+            isSelected=false;
+          });
+        },
+        child: Text(
+              widget.text,
+              style: TextStyle(
+                fontSize: isSelected ? 25.0 : 20.0,
+                decoration: isSelected ? TextDecoration.underline : null,
+                decorationColor: isSelected ? Colors.tealAccent : null,
+                decorationThickness: isSelected ? 2.0 :null,
+
+              ),
+            ),
+      ),
     );
   }
 }
@@ -240,14 +282,16 @@ class TextForm extends StatefulWidget {
   final width;
   final maxLines;
 
-  const TextForm({super.key,
-    required this.label,
-    required this.textHint,
-    required this.width,
-    this.maxLines});
+  const TextForm(
+      {super.key,
+      required this.label,
+      required this.textHint,
+      required this.width,
+      this.maxLines});
   @override
   State<TextForm> createState() => _TextFormState();
 }
+
 class _TextFormState extends State<TextForm> {
   @override
   Widget build(BuildContext context) {
@@ -272,6 +316,3 @@ class _TextFormState extends State<TextForm> {
     );
   }
 }
-
-
-

@@ -58,55 +58,53 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                 child: Image.asset("assets/mydash.png"),
               ),
             ),
-            TabsMobile(text: "Home", route: "/"),
-            SizedBox(
+            const TabsMobile(text: "Home", route: "/"),
+            const SizedBox(
               height: 20.0,
             ),
-            TabsMobile(text: "Works", route: "/works"),
-            SizedBox(
+            const TabsMobile(text: "Works", route: "/works"),
+            const SizedBox(
               height: 20.0,
             ),
-            TabsMobile(text: "Blog", route: "/blog"),
-            SizedBox(
+            const TabsMobile(text: "Blog", route: "/blog"),
+            const SizedBox(
               height: 20.0,
             ),
-            TabsMobile(text: "About", route: "/about"),
-            SizedBox(
+            const TabsMobile(text: "About", route: "/about"),
+            const SizedBox(
               height: 20.0,
             ),
-            TabsMobile(text: "Contact", route: "/contact"),
-            SizedBox(
+            const TabsMobile(text: "Contact", route: "/contact"),
+            const SizedBox(
               height: 40.0,
             ),
+            //social media pages
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 IconButton(
-                  //onPressed: () async => await
-                  //launchUrlString("https://www.instagram.com/_m.a.k.s.y_/"),
+                  onPressed: () async => await
+                  launchUrlString("https://www.instagram.com/_m.a.k.s.y_/"),
                   icon: SvgPicture.asset(
                     "assets/instagram.svg",
                     width: 35.0,
                   ),
-                  onPressed: () {},
                 ),
                 IconButton(
-                  //onPressed: () async => await
-                  //launchUrlString("https://x.com/maksyn440"),
+                  onPressed: () async => await
+                  launchUrlString("https://x.com/maksyn440"),
                   icon: SvgPicture.asset(
                     "assets/twitterx.svg",
                     width: 35.0,
                   ),
-                  onPressed: () {},
                 ),
                 IconButton(
-                  //onPressed: () async => await
-                  //launchUrlString("https://github.com/Maxwell-016/portfolio-trial"),
+                  onPressed: () async => await
+                  launchUrlString("https://github.com/Maxwell-016"),
                   icon: SvgPicture.asset(
                     "assets/github.svg",
                     width: 35.0,
                   ),
-                  onPressed: () {},
                 )
               ],
             )
