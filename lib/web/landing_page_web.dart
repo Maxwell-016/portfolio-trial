@@ -33,7 +33,6 @@ class _LandingPageWebState extends State<LandingPageWeb> {
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
-    var cardWidth = deviceWidth / 3.4;
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
@@ -354,23 +353,20 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                         width: (deviceWidth / 1.2) + 50.0,
                         maxLines: 5,
                       ),
+                      MaterialButton(
+                        onPressed: () {},
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        height: 60.0,
+                        minWidth: deviceWidth / 2.2,
+                        color: Colors.tealAccent,
+                        child: SizedText(
+                          text: "Submit",
+                          size: 20,
+                        ),
+                      ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  MaterialButton(
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    height: 60.0,
-                    minWidth: deviceWidth / 2.2,
-                    color: Colors.tealAccent,
-                    child: SizedText(
-                      text: "Submit",
-                      size: 20,
-                    ),
-                  )
                 ],
               ),
               SizedBox(

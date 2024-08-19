@@ -38,13 +38,13 @@ class AnimatedCard extends StatefulWidget {
   final text;
   final fit;
   final reverse;
-  final height;
-  final width;
+  final double? height;
+  final double? width;
 
   const AnimatedCard({
     super.key,
     required this.path,
-    required this.text,
+    this.text,
     this.fit,
     this.reverse,
     this.height,
@@ -68,11 +68,8 @@ class _AnimatedCardState extends State<AnimatedCard>
       vsync: this,
       duration: const Duration(seconds: 4),
     )
-      ..repeat(reverse: true)
-      ..addListener(() {
-        if (mounted) setState(() {});
-      });
-    _animation=Tween(begin: const Offset(0,0),end: Offset(0,0.2)).animate(_controller);
+      ..repeat(reverse: true);
+    _animation=Tween(begin: const Offset(0,0),end: const Offset(0,0.2)).animate(_controller);
   }
 
   @override
@@ -100,8 +97,8 @@ class _AnimatedCardState extends State<AnimatedCard>
             children: [
               Image.asset(
                 widget.path,
-                height: widget.height == null ? 200 : widget.height,
-                width: widget.width == null ? 200 : widget.width,
+                height: widget.height == null ? 200.0 : widget.height,
+                width: widget.width == null ? 200.0 : widget.width,
                 fit: widget.fit == null ? null : widget.fit,
               ),
               const SizedBox(
@@ -109,10 +106,8 @@ class _AnimatedCardState extends State<AnimatedCard>
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
-                child: Text(
-                  widget.text,
-                  style: const TextStyle(fontSize: 20.0),
-                ),
+                child:
+                  widget.text == null? SizedBox() : SizedText(text: widget.text, size: 20),
               ),
             ],
           ),
@@ -132,7 +127,7 @@ class AnimatedCardDelayed extends StatefulWidget {
   const AnimatedCardDelayed({
     super.key,
     required this.path,
-    required this.text,
+    this.text,
     this.fit,
     this.reverse,
     this.height,
@@ -197,10 +192,8 @@ class _AnimatedCardDelayedState extends State<AnimatedCardDelayed>
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
-                child: Text(
-                  widget.text,
-                  style: const TextStyle(fontSize: 20.0),
-                ),
+                child:
+                  widget.text==null? SizedBox():SizedText(text: widget.text, size: 20.0),
               ),
             ],
           ),
@@ -268,7 +261,7 @@ class _SizedTextState extends State<SizedText> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      widget.text,
+      widget.text,overflow: TextOverflow.visible,
       style: TextStyle(
           fontSize: widget.size,
           fontWeight: widget.weight == null ? null : widget.weight),
@@ -279,7 +272,7 @@ class _SizedTextState extends State<SizedText> {
 class TextForm extends StatefulWidget {
   final label;
   final textHint;
-  final width;
+  final double width;
   final maxLines;
 
   const TextForm(

@@ -259,7 +259,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
               TextForm(label: "Last Name", textHint: "Please type last name", width: widthDevice/1.4),
               TextForm(label: "Email", textHint: "Please type email address", width: widthDevice/1.4),
               TextForm(label: "Phone Number", textHint: "Please type phone number", width: widthDevice/1.4),
-              TextForm(label: "Message", textHint: "Message", width: widthDevice/1.4,maxLines: 10.0,),
+              TextForm(label: "Message", textHint: "Message", width: widthDevice/1.4,maxLines: 10,),
               MaterialButton(
                 onPressed: (){},
                 shape: RoundedRectangleBorder(

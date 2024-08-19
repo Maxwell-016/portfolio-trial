@@ -13,7 +13,7 @@ class ContactWeb extends StatefulWidget {
 class _ContactWebState extends State<ContactWeb> {
   @override
   Widget build(BuildContext context) {
-    //double widthDevice = MediaQuery.of(context).size.width;
+    double deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: Drawer(
@@ -107,7 +107,71 @@ class _ContactWebState extends State<ContactWeb> {
             )
           ];
         },
-        body: SingleChildScrollView(),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 30.0,),
+              const SizedText(text: "Contact me", size: 40.0,weight: FontWeight.w700,),
+              const SizedBox(height: 20.0,),
+              Wrap(
+                direction: Axis.vertical,
+                spacing: 30.0,
+                alignment: WrapAlignment.center,
+                children: [
+                  Wrap(
+                    spacing: 50,
+                    direction: Axis.horizontal,
+                    children: [
+                      TextForm(
+                          label: "First name",
+                          textHint: "Please type first name",
+                          width: deviceWidth / 2.4),
+                      TextForm(
+                          label: "Last name",
+                          textHint: "Please type Last name",
+                          width: deviceWidth / 2.4),
+                    ],
+                  ),
+                  Wrap(
+                    direction: Axis.horizontal,
+                    spacing: 50.0,
+                    children: [
+                      TextForm(
+                          label: "Email",
+                          textHint: "Please type email address",
+                          width: deviceWidth / 2.4),
+                      TextForm(
+                          label: "Phone number",
+                          textHint: "Please type your phone number",
+                          width: deviceWidth / 2.4),
+                    ],
+                  ),
+                  TextForm(
+                    label: "Message",
+                    textHint: "Message",
+                    width: (deviceWidth / 1.2) + 50.0,
+                    maxLines: 5,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 200.0),
+                    child: MaterialButton(
+                      onPressed: () {},
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      height: 60.0,
+                      minWidth: deviceWidth / 2.2,
+                      color: Colors.tealAccent,
+                      child: const SizedText(
+                        text: "Submit",
+                        size: 20,
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
