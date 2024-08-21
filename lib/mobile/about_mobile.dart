@@ -131,7 +131,7 @@ class _AboutMobileState extends State<AboutMobile> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -155,7 +155,7 @@ class _AboutMobileState extends State<AboutMobile> {
                         height: 10.0,
                       ),
                       Wrap(
-                        spacing: 7.0,
+                        spacing: 4.0,
                         children: [
                           tealContainer("Flutter"),
                           tealContainer("Firebase"),

@@ -160,7 +160,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
               SizedBox(
                 height: 15.0,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Wrap(
@@ -197,7 +197,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
           ),
           //About me, Second section
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(5.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -221,7 +221,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                   height: 10.0,
                 ),
                 Wrap(
-                  spacing: 7.0,
+                  spacing: 4.0,
                   children: [
                     tealContainer("Flutter"),
                     tealContainer("Firebase"),
@@ -254,7 +254,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
             runSpacing: 20.0,
             alignment: WrapAlignment.center,
             children: [
-              SizedText(text: "Contact Me", size: 40,),
+              const SizedText(text: "Contact Me", size: 40,),
               TextForm(label: "First Name", textHint: "Please type first name", width: widthDevice/1.4),
               TextForm(label: "Last Name", textHint: "Please type last name", width: widthDevice/1.4),
               TextForm(label: "Email", textHint: "Please type email address", width: widthDevice/1.4),

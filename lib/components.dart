@@ -88,6 +88,11 @@ class _AnimatedCardState extends State<AnimatedCard>
       child: Card(
         elevation: 30.0,
         shape: RoundedRectangleBorder(
+          side: const BorderSide(
+            color: Colors.tealAccent,
+            width: 1.0,
+            style: BorderStyle.solid,
+          ),
           borderRadius: BorderRadius.circular(10.0),
         ),
         shadowColor: Colors.tealAccent,
