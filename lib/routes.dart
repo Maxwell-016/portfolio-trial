@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:maxwell_ndungu/mobile/about_mobile.dart';
+import 'package:maxwell_ndungu/mobile/blog_mobile.dart';
 import 'package:maxwell_ndungu/mobile/contact_mobile.dart';
 import 'package:maxwell_ndungu/mobile/landing_page_mobile.dart';
 import 'package:maxwell_ndungu/web/about_web.dart';
+import 'package:maxwell_ndungu/web/blog_web.dart';
 import 'package:maxwell_ndungu/web/contact_web.dart';
 import 'package:maxwell_ndungu/web/landing_page_web.dart';
 
@@ -35,6 +37,15 @@ class Routes {
               return AboutWeb();
             else
               return AboutMobile();
+          }),
+        );
+      case "/blog":
+        return MaterialPageRoute(
+          builder: (_) => LayoutBuilder(builder: (context, constraints) {
+            if (constraints.maxWidth > 800)
+              return BlogWeb();
+            else
+              return BlogMobile();
           }),
         );
       default:

@@ -111,7 +111,7 @@ class _AboutWebState extends State<AboutWeb> {
       body: ListView(
         children: [
           const SizedBox(
-            height: 20.0,
+            height: 100.0,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

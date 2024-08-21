@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 class TabsMobile extends StatefulWidget {
@@ -67,9 +68,9 @@ class _AnimatedCardState extends State<AnimatedCard>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 4),
-    )
-      ..repeat(reverse: true);
-    _animation=Tween(begin: const Offset(0,0),end: const Offset(0,0.2)).animate(_controller);
+    )..repeat(reverse: true);
+    _animation = Tween(begin: const Offset(0, 0), end: const Offset(0, 0.2))
+        .animate(_controller);
   }
 
   @override
@@ -106,8 +107,9 @@ class _AnimatedCardState extends State<AnimatedCard>
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
-                child:
-                  widget.text == null? SizedBox() : SizedText(text: widget.text, size: 20),
+                child: widget.text == null
+                    ? SizedBox()
+                    : SizedText(text: widget.text, size: 20),
               ),
             ],
           ),
@@ -155,7 +157,8 @@ class _AnimatedCardDelayedState extends State<AnimatedCardDelayed>
       ..addListener(() {
         if (mounted) setState(() {});
       });
-    _animation=Tween(begin: const Offset(0,0),end: Offset(0,0.2)).animate(_controller);
+    _animation = Tween(begin: const Offset(0, 0), end: Offset(0, 0.2))
+        .animate(_controller);
   }
 
   @override
@@ -192,8 +195,9 @@ class _AnimatedCardDelayedState extends State<AnimatedCardDelayed>
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
-                child:
-                  widget.text==null? SizedBox():SizedText(text: widget.text, size: 20.0),
+                child: widget.text == null
+                    ? SizedBox()
+                    : SizedText(text: widget.text, size: 20.0),
               ),
             ],
           ),
@@ -206,41 +210,40 @@ class _AnimatedCardDelayedState extends State<AnimatedCardDelayed>
 class WebTabs extends StatefulWidget {
   final text;
   final route;
-  const WebTabs({super.key, required this.text,required this.route});
+  const WebTabs({super.key, required this.text, required this.route});
 
   @override
   State<WebTabs> createState() => _WebTabsState();
 }
 
 class _WebTabsState extends State<WebTabs> {
-  bool isSelected=false;
+  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.of(context).pushNamed(widget.route);
       },
       child: MouseRegion(
-        onEnter: (event){
+        onEnter: (event) {
           setState(() {
-            isSelected=true;
+            isSelected = true;
           });
         },
-        onExit: (event){
+        onExit: (event) {
           setState(() {
-            isSelected=false;
+            isSelected = false;
           });
         },
         child: Text(
-              widget.text,
-              style: TextStyle(
-                fontSize: isSelected ? 25.0 : 20.0,
-                decoration: isSelected ? TextDecoration.underline : null,
-                decorationColor: isSelected ? Colors.tealAccent : null,
-                decorationThickness: isSelected ? 2.0 :null,
-
-              ),
-            ),
+          widget.text,
+          style: TextStyle(
+            fontSize: isSelected ? 25.0 : 20.0,
+            decoration: isSelected ? TextDecoration.underline : null,
+            decorationColor: isSelected ? Colors.tealAccent : null,
+            decorationThickness: isSelected ? 2.0 : null,
+          ),
+        ),
       ),
     );
   }
@@ -261,7 +264,8 @@ class _SizedTextState extends State<SizedText> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      widget.text,overflow: TextOverflow.visible,
+      widget.text,
+      overflow: TextOverflow.visible,
       style: TextStyle(
           fontSize: widget.size,
           fontWeight: widget.weight == null ? null : widget.weight),
@@ -305,6 +309,31 @@ class _TextFormState extends State<TextForm> {
           label: Text(widget.label),
           hintText: widget.textHint,
         ),
+      ),
+    );
+  }
+}
+
+class AbelCustom extends StatelessWidget {
+  final String text;
+  final double size;
+  final Color? color;
+  final FontWeight? weight;
+  const AbelCustom(
+      {super.key,
+      required this.text,
+      required this.size,
+      this.color,
+      this.weight});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.abel(
+        fontSize: size,
+        color: color == null ? Colors.black : color,
+        fontWeight: weight == null ? FontWeight.normal : weight,
       ),
     );
   }

@@ -353,23 +353,26 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                         width: (deviceWidth / 1.2) + 50.0,
                         maxLines: 5,
                       ),
-                      MaterialButton(
-                        onPressed: () {},
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        height: 60.0,
-                        minWidth: deviceWidth / 2.2,
-                        color: Colors.tealAccent,
-                        child: SizedText(
-                          text: "Submit",
-                          size: 20,
+                      Container(
+                        margin: const EdgeInsets.only(left: 200.0),
+                        child: MaterialButton(
+                          onPressed: () {},
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          height: 60.0,
+                          minWidth: deviceWidth / 2.2,
+                          color: Colors.tealAccent,
+                          child: const SizedText(
+                            text: "Submit",
+                            size: 20,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 100.0,
               )
             ],
