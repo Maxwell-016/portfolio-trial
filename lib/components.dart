@@ -304,13 +304,13 @@ class _TextFormState extends State<TextForm> {
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Colors.tealAccent, width: 2.0),
+            borderSide: const BorderSide(color: Colors.tealAccent, width: 2.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Colors.tealAccent, width: 2.0),
+            borderSide: const BorderSide(color: Colors.tealAccent, width: 2.0),
           ),
-          contentPadding: EdgeInsets.all(10.0),
+          contentPadding: const EdgeInsets.all(10.0),
           label: Text(widget.label),
           hintText: widget.textHint,
         ),
