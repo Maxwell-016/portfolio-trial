@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:717899257312:android:c96e7ff61faab80aac8785",
+        "mobilesdk_app_id": "1:717899257312:android:acfb55ad580044dcac8785",
         "android_client_info": {
-          "package_name": "com.example.app"
+          "package_name": "com.example.maxwell_ndungu"
         }
       },
       "oauth_client": [],

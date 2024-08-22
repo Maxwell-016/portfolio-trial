@@ -38,6 +38,7 @@ class _AboutMobileState extends State<AboutMobile> {
         backgroundColor: Colors.white,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+          backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(
             size: 35.0,
             color: Colors.black,

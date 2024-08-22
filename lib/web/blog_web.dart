@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,12 +14,13 @@ class BlogWeb extends StatefulWidget {
 }
 
 class _BlogWebState extends State<BlogWeb> {
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        drawer: Drawer(
+        endDrawer: Drawer(
           backgroundColor: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -71,26 +73,9 @@ class _BlogWebState extends State<BlogWeb> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {  
             return<Widget>[
               SliverAppBar(
-                iconTheme: IconThemeData(
+                iconTheme: const IconThemeData(
                   size: 35.0,
                   color: Colors.black,
-                ),
-                title: const Row(
-                  children: [
-                    Spacer(
-                      flex: 3,
-                    ),
-                    WebTabs(text: "Home", route: '/'),
-                    Spacer(),
-                    WebTabs(text: "Works", route: '/works'),
-                    Spacer(),
-                    WebTabs(text: "Blog", route: '/blog'),
-                    Spacer(),
-                    WebTabs(text: "About", route: '/about'),
-                    Spacer(),
-                    WebTabs(text: "Contact", route: '/contact'),
-                    Spacer(),
-                  ],
                 ),
                 expandedHeight: 500.0,
                 flexibleSpace: FlexibleSpaceBar(
@@ -101,7 +86,7 @@ class _BlogWebState extends State<BlogWeb> {
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(4.0),
                     ),
-                    child: AbelCustom(
+                    child: const AbelCustom(
                       text: "WELCOME TO MY BLOG ",
                       size: 24.0,
                       color: Colors.white,
@@ -112,19 +97,36 @@ class _BlogWebState extends State<BlogWeb> {
               )
             ];
           },
-          body: ListView(
-            children: [
-              BlogPage(),
-            ],
+          body: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection("articles").snapshots(),
+            builder: (context, snapshot) {
+              if(snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    DocumentSnapshot documentSnapshot= snapshot.data!.docs[index];
+                    return BlogPage(title: documentSnapshot["title"], body: documentSnapshot["body"]);
+                  },
+                );
+              }
+              else {
+                return
+                const Center(
+                child: CircularProgressIndicator(),
+              );
+              }
+            }
           ),
-          
+
     ),
       )
     );
   }
 }
 class BlogPage extends StatefulWidget {
-  const BlogPage({super.key});
+  final String title;
+  final String body;
+  const BlogPage({super.key, required this.title, required this.body});
 
   @override
   State<BlogPage> createState() => _BlogPageState();
@@ -158,7 +160,7 @@ class _BlogPageState extends State<BlogPage> {
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(5.0)
                     ),
-                    child: const AbelCustom(text: "Who is Maxwell?", size: 25.0,color: Colors.white,),
+                    child: AbelCustom(text: widget.title, size: 25.0,color: Colors.white,),
                   ),
                   IconButton(onPressed: (){
                     setState(() {
@@ -170,13 +172,7 @@ class _BlogPageState extends State<BlogPage> {
                 ],
               ),
               SizedBox(height: 40.0,),
-              Text("Hi, I'm Maxwell, "
-                  "a computer science student with a growing obsession for all things mobile development. "
-                  "Seriously, I can't get enough of it! "
-                  "There's just something so cool about building apps that people can use and enjoy in their daily lives. "
-                  "And when it comes to mobile, Flutter has absolutely captured my imagination."
-                  " The framework is incredibly powerful and versatile, allowing me to create beautiful interfaces, ensure smooth performance, and reach users across different platforms. "
-                  "I'm on a constant quest to learn and experiment, always looking for new challenges and opportunities to build apps that are both innovative and have a positive impact.",
+              Text(widget.body,
                 style: GoogleFonts.openSans(fontSize: 15.0,),
                 maxLines: convert == true? null : 3,
                 overflow: convert == true? TextOverflow.visible : TextOverflow.ellipsis,)
