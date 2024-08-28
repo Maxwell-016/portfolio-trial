@@ -76,8 +76,8 @@ class _AnimatedCardState extends State<AnimatedCard>
   @override
   void dispose() {
     // TODO: implement dispose
-    _controller.stop();
-    _controller.dispose();
+    // _controller.stop();
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -169,8 +169,8 @@ class _AnimatedCardDelayedState extends State<AnimatedCardDelayed>
   @override
   void dispose() {
     // TODO: implement dispose
-    _controller.stop();
-    _controller.dispose();
+    // _controller.stop();
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -278,30 +278,39 @@ class _SizedTextState extends State<SizedText> {
   }
 }
 
-class TextForm extends StatefulWidget {
+class TextForm extends StatelessWidget {
   final label;
   final textHint;
   final double width;
   final maxLines;
+  final controller;
+  final validator;
 
-  const TextForm(
-      {super.key,
-      required this.label,
-      required this.textHint,
-      required this.width,
-      this.maxLines});
-  @override
-  State<TextForm> createState() => _TextFormState();
-}
+  const TextForm({super.key,
+    required this.label,
+    required this.textHint,
+    required this.width,
+    this.maxLines,
+    this.controller,
+    this.validator});
 
-class _TextFormState extends State<TextForm> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: widget.width,
-      child: TextField(
-        maxLines: widget.maxLines,
+      width: width,
+      child: TextFormField(
+        validator: validator == null ? null : validator,
+        controller: controller == null ? null : controller,
+        maxLines: maxLines == null ? null :maxLines,
         decoration: InputDecoration(
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(color: Colors.red, width: 1.0),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(color: Colors.red, width: 1.0),
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(color: Colors.tealAccent, width: 2.0),
@@ -311,13 +320,14 @@ class _TextFormState extends State<TextForm> {
             borderSide: const BorderSide(color: Colors.tealAccent, width: 2.0),
           ),
           contentPadding: const EdgeInsets.all(10.0),
-          label: Text(widget.label),
-          hintText: widget.textHint,
+          label: Text(label),
+          hintText: textHint,
         ),
       ),
     );
   }
 }
+
 
 class AbelCustom extends StatelessWidget {
   final String text;

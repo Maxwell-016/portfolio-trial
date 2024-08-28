@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../components.dart';
@@ -15,6 +16,19 @@ class BlogWeb extends StatefulWidget {
 
 class _BlogWebState extends State<BlogWeb> {
 
+// var logger=Logger();
+// void streamArticle()async{
+//   await for(var snapshot in FirebaseFirestore.instance.collection("articles").snapshots()){
+//     for(var title in snapshot.docs){
+//       logger.d(title.data()["title"]);
+//     }
+//   }
+// }
+// @override
+//   void initState() {
+//     super.initState();
+//     streamArticle();
+//   }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,7 +45,7 @@ class _BlogWebState extends State<BlogWeb> {
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
                   radius: 70.0,
-                  backgroundImage: AssetImage("mydash.png"),
+                  backgroundImage: AssetImage("myself.jpg"),
                 ),
               ),
               const SizedBox(

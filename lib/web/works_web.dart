@@ -30,7 +30,7 @@ class _WorksWebState extends State<WorksWeb> {
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 70.0,
-                    backgroundImage: AssetImage("mydash.png"),
+                    backgroundImage: AssetImage("myself.jpg",),
                   ),
                 ),
                 const SizedBox(

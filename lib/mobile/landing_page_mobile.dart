@@ -54,7 +54,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                     shape: BoxShape.circle, //gives a circular shape
       
                     //borderRadius: BorderRadius.circular(50.0),
-                    //border: Border.all(width: 1.0,color: Colors.black)  gives the border color
+                    //border: Border.all(width: 1.0,color: Colors.black)  //gives the border color
                   ),
                   child: Image.asset("assets/mydash.png"),
                 ),
@@ -118,16 +118,16 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 117.0,
                   backgroundColor: Colors.tealAccent,
                   child: CircleAvatar(
-                    radius: 110.0,
+                    radius: 114.0,
                     backgroundColor: Colors.white,
-                    backgroundImage: AssetImage("assets/mydash.png"),
+                    backgroundImage: AssetImage("assets/myself.jpg"),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
                 Column(
@@ -143,22 +143,22 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                             topRight: Radius.circular(10.0),
                             bottomRight: Radius.circular(10.0),
                           )),
-                      child: Text(
+                      child: const Text(
                         "Hello there! I'm",
                         style: TextStyle(fontSize: 15.0),
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Maxwell Ndungu",
                       style: TextStyle(fontSize: 40.0),
                     ),
-                    Text(
+                    const Text(
                       "A Flutter Developer",
                       style: TextStyle(fontSize: 20.0),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15.0,
                 ),
                 const Row(

@@ -122,7 +122,7 @@ class _AboutMobileState extends State<AboutMobile> {
               child: CircleAvatar(
                 radius: 113.0,
                 backgroundColor: Colors.white,
-                backgroundImage: AssetImage("assets/mydash.png"),
+                backgroundImage: AssetImage("assets/myself.jpg"),
               ),
             ),
             const SizedBox(
@@ -145,7 +145,7 @@ class _AboutMobileState extends State<AboutMobile> {
                         style: TextStyle(fontSize: 15.0),
                       ),
                       const Text(
-                        "I strive to ensure astounding perfomance with state of ",
+                        "I strive to ensure astounding performance with state of ",
                         style: TextStyle(fontSize: 15.0),
                       ),
                       const Text(

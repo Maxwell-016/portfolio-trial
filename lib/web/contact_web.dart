@@ -27,7 +27,7 @@ class _ContactWebState extends State<ContactWeb> {
               child: CircleAvatar(
                 radius: 70.0,
                 backgroundColor: Colors.white,
-                backgroundImage: AssetImage("mydash.png"),
+                backgroundImage: AssetImage("myself.jpg"),
               ),
             ),
             const SizedBox(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../components.dart';
@@ -29,6 +30,14 @@ class _LandingPageWebState extends State<LandingPageWeb> {
       ),
     );
   }
+
+  var logger=Logger();
+  final TextEditingController _firstNameController=TextEditingController();
+  final TextEditingController _lastNameController=TextEditingController();
+  final TextEditingController _emailController=TextEditingController();
+  final TextEditingController _phoneController=TextEditingController();
+  final TextEditingController _messageController=TextEditingController();
+  final formKey=GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +79,7 @@ class _LandingPageWebState extends State<LandingPageWeb> {
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 70.0,
-                backgroundImage: AssetImage("mydash.png"),
+                backgroundImage: AssetImage("myself.jpg"),
               ),
             ),
             const SizedBox(
@@ -195,8 +204,8 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                     radius: 117.0,
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
-                      radius: 112.0,
-                      backgroundImage: AssetImage("assets/mydash.png"),
+                      radius: 114.0,
+                      backgroundImage: AssetImage("assets/myself.jpg"),
                     ),
                   ),
                   //SizedBox(width: 50.0,),
@@ -303,74 +312,103 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                 height: 150.0,
               ),
               //Contact me
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const SizedText(
-                    text: "Contact Me",
-                    size: 40.0,
-                    weight: FontWeight.w700,
-                  ),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  Wrap(
-                    direction: Axis.vertical,
-                    runSpacing: 30.0,
-                    spacing: 30.0,
-                    children: [
-                      Wrap(
-                        spacing: 50,
-                        direction: Axis.horizontal,
-                        children: [
-                          TextForm(
-                              label: "First name",
-                              textHint: "Please type first name",
-                              width: deviceWidth / 2.4),
-                          TextForm(
-                              label: "Last name",
-                              textHint: "Please type Last name",
-                              width: deviceWidth / 2.4),
-                        ],
-                      ),
-                      Wrap(
-                        direction: Axis.horizontal,
-                        spacing: 50.0,
-                        children: [
-                          TextForm(
-                              label: "Email",
-                              textHint: "Please type email address",
-                              width: deviceWidth / 2.4),
-                          TextForm(
-                              label: "Phone number",
-                              textHint: "Please type your phone number",
-                              width: deviceWidth / 2.4),
-                        ],
-                      ),
-                      TextForm(
-                        label: "Message",
-                        textHint: "Message",
-                        width: (deviceWidth / 1.2) + 50.0,
-                        maxLines: 5,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 200.0),
-                        child: MaterialButton(
-                          onPressed: () {},
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          height: 60.0,
-                          minWidth: deviceWidth / 2.2,
-                          color: Colors.tealAccent,
-                          child: const SizedText(
-                            text: "Submit",
-                            size: 20,
+              Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const SizedText(
+                      text: "Contact Me",
+                      size: 40.0,
+                      weight: FontWeight.w700,
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    Wrap(
+                      direction: Axis.vertical,
+                      runSpacing: 30.0,
+                      spacing: 30.0,
+                      children: [
+                        Wrap(
+                          spacing: 50,
+                          direction: Axis.horizontal,
+                          children: [
+                            TextForm(
+                                controller: _firstNameController,
+                                label: "First name",
+                                textHint: "Please type first name",
+                                width: deviceWidth / 2.4,
+                                validator: (text){
+                                  if(text.toString().isEmpty){
+                                    return "First name is required";
+                                  }
+                                },
+                            ),
+
+                            TextForm(
+                                controller: _lastNameController,
+                                label: "Last name",
+                                textHint: "Please type Last name",
+                                width: deviceWidth / 2.4),
+                          ],
+                        ),
+                        Wrap(
+                          direction: Axis.horizontal,
+                          spacing: 50.0,
+                          children: [
+                            TextForm(
+                                controller: _emailController,
+                                label: "Email",
+                                textHint: "Please type email address",
+                                width: deviceWidth / 2.4,
+                              validator: (text){
+                                if(text.toString().isEmpty){
+                                  return "Email is required";
+                                }
+                              },
+                            ),
+                            TextForm(
+                                controller: _phoneController,
+                                label: "Phone number",
+                                textHint: "Please type your phone number",
+                                width: deviceWidth / 2.4),
+                          ],
+                        ),
+                        TextForm(
+                          controller: _messageController,
+                          label: "Message",
+                          textHint: "Message",
+                          width: (deviceWidth / 1.2) + 50.0,
+                          maxLines: 5,
+                          validator: (text){
+                            if(text.toString().isEmpty){
+                              return "Message is required";
+                            }
+                          },
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 200.0),
+                          child: MaterialButton(
+                            onPressed: () {
+                              formKey.currentState!.validate();
+                              logger.d(_firstNameController.text);
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            height: 60.0,
+                            minWidth: deviceWidth / 2.2,
+                            color: Colors.tealAccent,
+                            child: const SizedText(
+                              text: "Submit",
+                              size: 20,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 100.0,

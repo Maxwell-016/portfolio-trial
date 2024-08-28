@@ -70,7 +70,7 @@ class _AboutWebState extends State<AboutWeb> {
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 70.0,
-                backgroundImage: AssetImage("mydash.png"),
+                backgroundImage: AssetImage("myself.jpg"),
               ),
             ),
             const SizedBox(
@@ -122,7 +122,7 @@ class _AboutWebState extends State<AboutWeb> {
                 child: CircleAvatar(
                   radius: 113.0,
                   backgroundColor: Colors.white,
-                  backgroundImage: AssetImage("assets/mydash.png"),
+                  backgroundImage: AssetImage("assets/myself.jpg"),
                 ),
               ),
               Column(
