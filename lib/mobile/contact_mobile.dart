@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -12,6 +13,12 @@ class ContactMobile extends StatefulWidget {
 }
 
 class _ContactMobileState extends State<ContactMobile> {
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double widthDevice = MediaQuery.of(context).size.width;
@@ -120,46 +127,111 @@ class _ContactMobileState extends State<ContactMobile> {
                 const SizedBox(
                   height: 20.0,
                 ),
-                Wrap(
-                  runSpacing: 20.0,
-                  alignment: WrapAlignment.center,
-                  children: [
-                    TextForm(
+                Form(
+                  key: formKey,
+                  child: Wrap(
+                    runSpacing: 20.0,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      TextForm(
+                        controller: _firstNameController,
                         label: "First Name",
-                        textHint: "Please type first name",
-                        width: widthDevice / 1.4),
-                    TextForm(
+                        textHint: "e.g. Maxwell",
+                        width: widthDevice / 1.4,
+                        validator: (text) {
+                          if (text.toString().isEmpty) {
+                            return "First name is required";
+                          }
+                          int? parsedValue = int.tryParse(text);
+                          if (parsedValue != null) {
+                            return 'Your name cannot be a number';
+                          }
+                          if (RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(text)) {
+                            return 'Your name should not contain special characters.i.e. [!@#\$%^&*(),.?":{}|<>]';
+                          }
+                        },
+                      ),
+                      TextForm(
+                        controller: _lastNameController,
                         label: "Last Name",
-                        textHint: "Please type last name",
-                        width: widthDevice / 1.4),
-                    TextForm(
+                        textHint: "e.g. Ndungu",
+                        width: widthDevice / 1.4,
+                        validator: (text) {
+                          int? parsedValue = int.tryParse(text);
+                          if (parsedValue != null) {
+                            return 'your name cannot be a number';
+                          }
+                          if (RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(text)) {
+                            return 'Your name should not contain special characters.i.e. [!@#\$%^&*(),.?":{}|<>]';
+                          }
+                        },
+                      ),
+                      TextForm(
+                        controller: _emailController,
                         label: "Email",
-                        textHint: "Please type email address",
-                        width: widthDevice / 1.4),
-                    TextForm(
-                        label: "Phone Number",
-                        textHint: "Please type phone number",
-                        width: widthDevice / 1.4),
-                    TextForm(
-                      label: "Message",
-                      textHint: "Message",
-                      width: widthDevice / 1.4,
-                      maxLines: 10,
-                    ),
-                    MaterialButton(
-                      onPressed: () {},
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        textHint: "e.g. ndungumaxwell057@gmail.com",
+                        width: widthDevice / 1.4,
+                        validator: (text) {
+                          if (text.toString().isEmpty) {
+                            return "Email is required";
+                          }
+                          if (!EmailValidator.validate(text)) {
+                            return 'Enter a valid e-mail';
+                          }
+                        },
                       ),
-                      height: 60.0,
-                      minWidth: widthDevice / 2.2,
-                      color: Colors.tealAccent,
-                      child: const SizedText(
-                        size: 20.0,
-                        text: "Submit",
+                      TextForm(
+                        controller: _phoneController,
+                        label: "Phone number",
+                        textHint: "e.g. 0743904449",
+                        width: widthDevice / 1.4,
+                        validator: (text) {
+                          if (text.toString().isEmpty) {
+                            return null;
+                          } else {
+                            int? parsedValue = int.tryParse(text);
+                            if (parsedValue == null) {
+                              return 'Enter a valid number';
+                            }
+                            if (text.toString().length != 10) {
+                              return 'Enter a valid number';
+                            }
+                          }
+                        },
                       ),
-                    ),
-                  ],
+                      TextForm(
+                        controller: _messageController,
+                        label: "Message",
+                        textHint: " minimum of 20 words",
+                        width: widthDevice / 1.4,
+                        maxLines: 10,
+                        validator: (text) {
+                          if (text.toString().isEmpty) {
+                            return "Message is required";
+                          }
+                          List<String> words = text.trim().split(RegExp(r'\s+'));
+                          if (words.length < 20) {
+                            return 'message should have a minimum of 20 words';
+                          }
+                        },
+                      ),
+                      MaterialButton(
+                        onPressed: () {
+                          formKey.currentState?.validate();
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        height: 60.0,
+                        minWidth: widthDevice / 2.2,
+                        color: Colors.tealAccent,
+                        child: const SizedText(
+                          size: 20.0,
+                          text: "Submit",
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 50.0,

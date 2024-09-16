@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
@@ -231,23 +233,24 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                         size: 40.0,
                         weight: FontWeight.w700,
                       ),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      const SizedText(
-                        text:
-                            "Hello! I'm Maxwell Ndungu I specialize in flutter development.",
-                        size: 15,
-                      ),
-                      const SizedText(
-                        text:
-                            "I strive to ensure astounding performance with state of",
-                        size: 15,
-                      ),
-                      const SizedText(
-                        text:
-                            "the art security for Android, Ios, Web, Mac, Linux and Windows",
-                        size: 15,
+                      StreamBuilder<DocumentSnapshot>(
+                          stream: FirebaseFirestore.instance.collection("details").doc('tdUfdodi8b6sKHSOqmWO').snapshots(),
+                          builder: (context,snapshot){
+                            if(snapshot.hasError){
+                              return Text("Error: ${snapshot.error}");
+                            }
+                            if(snapshot.hasData){
+                              String data= snapshot.data!['about'];
+                              return SizedBox(
+                                width: 400.0,
+                                child:SizedText(text: data, size: 15.0),);
+                            }
+                            else{
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          }
                       ),
                       const SizedBox(
                         height: 15.0,
@@ -337,11 +340,18 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                             TextForm(
                                 controller: _firstNameController,
                                 label: "First name",
-                                textHint: "Please type first name",
+                                textHint: "e.g. Maxwell",
                                 width: deviceWidth / 2.4,
                                 validator: (text){
                                   if(text.toString().isEmpty){
                                     return "First name is required";
+                                  }
+                                  int? parsedValue = int.tryParse(text);
+                                  if(parsedValue != null){
+                                    return 'Your name cannot be a number';
+                                  }
+                                  if(RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(text)){
+                                    return 'Your name should not contain special characters.i.e. [!@#\$%^&*(),.?":{}|<>]';
                                   }
                                 },
                             ),
@@ -349,8 +359,18 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                             TextForm(
                                 controller: _lastNameController,
                                 label: "Last name",
-                                textHint: "Please type Last name",
-                                width: deviceWidth / 2.4),
+                                textHint: "e.g. Ndungu",
+                                width: deviceWidth / 2.4,
+                              validator: (text){
+                                  int? parsedValue=int.tryParse(text);
+                                  if(parsedValue != null){
+                                    return 'your name cannot be a number';
+                                  }
+                                  if(RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(text)){
+                                    return 'Your name should not contain special characters.i.e. [!@#\$%^&*(),.?":{}|<>]';
+                                  }
+                              },
+                            ),
                           ],
                         ),
                         Wrap(
@@ -360,30 +380,54 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                             TextForm(
                                 controller: _emailController,
                                 label: "Email",
-                                textHint: "Please type email address",
+                                textHint: "e.g. ndungumaxwell057@gmail.com",
                                 width: deviceWidth / 2.4,
                               validator: (text){
                                 if(text.toString().isEmpty){
                                   return "Email is required";
+                                }
+                                if(!EmailValidator.validate(text)){
+                                  return 'Enter a valid e-mail';
                                 }
                               },
                             ),
                             TextForm(
                                 controller: _phoneController,
                                 label: "Phone number",
-                                textHint: "Please type your phone number",
-                                width: deviceWidth / 2.4),
+                                textHint: "e.g. 0743904449",
+                                width: deviceWidth / 2.4,
+                                validator: (text){
+                                  if(text.toString().isEmpty){
+                                    return null;
+                                  }
+                                  else {
+                                    int? parsedValue = int.tryParse(text);
+                                    if (parsedValue == null) {
+                                      return 'Enter a valid number';
+                                    }
+                                    if (text
+                                        .toString()
+                                        .length != 10) {
+                                      return 'Enter a valid number';
+                                    }
+                                  }
+                              },
+                            ),
                           ],
                         ),
                         TextForm(
                           controller: _messageController,
                           label: "Message",
-                          textHint: "Message",
+                          textHint: " minimum of 20 words",
                           width: (deviceWidth / 1.2) + 50.0,
                           maxLines: 5,
                           validator: (text){
                             if(text.toString().isEmpty){
                               return "Message is required";
+                            }
+                            List<String> words = text.trim().split(RegExp(r'\s+'));
+                            if(words.length < 20){
+                              return 'message should have a minimum of 20 words';
                             }
                           },
                         ),

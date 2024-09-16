@@ -11,9 +11,22 @@ class BlogMobile extends StatefulWidget {
 
   @override
   State<BlogMobile> createState() => _BlogMobileState();
+
 }
 
 class _BlogMobileState extends State<BlogMobile> {
+  // void streamArticle() async{
+  //   FirebaseFirestore.instance.collection("articles").snapshots().listen((snapshot){
+  //     for(var title in snapshot.docs){
+  //       print(title.data()['title']);
+  //     }
+  //   });
+  // }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   streamArticle();
+  // }
   @override
   Widget build(BuildContext context) {
     return SafeArea(

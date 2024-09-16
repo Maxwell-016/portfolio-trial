@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maxwell_ndungu/components.dart';
@@ -30,9 +32,28 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
       ),
     );
   }
+
+  // aboutMe()async{
+  //   FirebaseFirestore.instance.collection("details").snapshots().listen((snapshot){
+  //     for(var about in snapshot.docs){
+  //       print(about.data()['about']);
+  //     }
+  //   });
+  // }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   aboutMe();
+  // }
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    double widthDevice=MediaQuery.of(context).size.width;
+    double widthDevice = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -52,7 +73,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                 child: Container(
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle, //gives a circular shape
-      
+
                     //borderRadius: BorderRadius.circular(50.0),
                     //border: Border.all(width: 1.0,color: Colors.black)  //gives the border color
                   ),
@@ -84,24 +105,24 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                    onPressed: () async => await
-                    launchUrlString("https://www.instagram.com/_m.a.k.s.y_/"),
+                    onPressed: () async => await launchUrlString(
+                        "https://www.instagram.com/_m.a.k.s.y_/"),
                     icon: SvgPicture.asset(
                       "assets/instagram.svg",
                       width: 35.0,
                     ),
                   ),
                   IconButton(
-                    onPressed: () async => await
-                    launchUrlString("https://x.com/maksyn440"),
+                    onPressed: () async =>
+                        await launchUrlString("https://x.com/maksyn440"),
                     icon: SvgPicture.asset(
                       "assets/twitterx.svg",
                       width: 35.0,
                     ),
                   ),
                   IconButton(
-                    onPressed: () async => await
-                    launchUrlString("https://github.com/Maxwell-016"),
+                    onPressed: () async =>
+                        await launchUrlString("https://github.com/Maxwell-016"),
                     icon: SvgPicture.asset(
                       "assets/github.svg",
                       width: 35.0,
@@ -134,8 +155,8 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
                       decoration: const BoxDecoration(
                           color: Colors.tealAccent,
                           borderRadius: BorderRadius.only(
@@ -206,18 +227,28 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                     "About Me",
                     style: TextStyle(fontSize: 40.0),
                   ),
-                  const Text(
-                    "Hello! I'm Maxwell Ndungu. I specialize in flutter development",
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                  const Text(
-                    "I strive to ensure astounding perfomance with state of ",
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                  const Text(
-                    "the art security for Android, Ios, Web, Mac, Linux",
-                    style: TextStyle(fontSize: 15.0),
-                  ),
+                  StreamBuilder<DocumentSnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection("details")
+                          .doc('tdUfdodi8b6sKHSOqmWO')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        }
+                        if (snapshot.hasData) {
+                          String data = snapshot.data!['about'];
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 30.0),
+                            child: SizedText(text: data, size: 15.0),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
                   const SizedBox(
                     height: 10.0,
                   ),
@@ -239,41 +270,151 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
             //What I do, Third Secton
             const Column(
               children: [
-                Text("What I Do? ",style: TextStyle(fontSize: 40.0),),
-                AnimatedCard(path: "assets/webDev.png", text:"Web Development",width: 300.0,),
-                SizedBox(height: 35.0,),
-                AnimatedCard(path: "assets/appDev.png", text:"App Development",width: 300.0,),
-                SizedBox(height: 35.0,),
-                AnimatedCard(path: "assets/firebase.png", text:"Back-end Development",width: 300.0,),
+                Text(
+                  "What I Do? ",
+                  style: TextStyle(fontSize: 40.0),
+                ),
+                AnimatedCard(
+                  path: "assets/webDev.png",
+                  text: "Web Development",
+                  width: 300.0,
+                ),
+                SizedBox(
+                  height: 35.0,
+                ),
+                AnimatedCard(
+                  path: "assets/appDev.png",
+                  text: "App Development",
+                  width: 300.0,
+                ),
+                SizedBox(
+                  height: 35.0,
+                ),
+                AnimatedCard(
+                  path: "assets/firebase.png",
+                  text: "Back-end Development",
+                  width: 300.0,
+                ),
               ],
-      
             ),
-            const SizedBox(height: 90.0,),
+            const SizedBox(
+              height: 90.0,
+            ),
             //Contact, fourth section
-            Wrap(
-              spacing: 20.0,
-              runSpacing: 20.0,
-              alignment: WrapAlignment.center,
-              children: [
-                const SizedText(text: "Contact Me", size: 40,),
-                TextForm(label: "First Name", textHint: "Please type first name", width: widthDevice/1.4),
-                TextForm(label: "Last Name", textHint: "Please type last name", width: widthDevice/1.4),
-                TextForm(label: "Email", textHint: "Please type email address", width: widthDevice/1.4),
-                TextForm(label: "Phone Number", textHint: "Please type phone number", width: widthDevice/1.4),
-                TextForm(label: "Message", textHint: "Message", width: widthDevice/1.4,maxLines: 10,),
-                MaterialButton(
-                  onPressed: (){},
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+            Form(
+              key: formKey,
+              child: Wrap(
+                spacing: 20.0,
+                runSpacing: 20.0,
+                alignment: WrapAlignment.center,
+                children: [
+                  const SizedText(
+                    text: "Contact Me",
+                    size: 40,
                   ),
-                  height: 60.0,
-                  minWidth: widthDevice/2.2,
-                  color: Colors.tealAccent,
-                  child:const SizedText(size: 20.0,text: "Submit",),
-                )
-              ],
+                  TextForm(
+                    controller: _firstNameController,
+                    label: "First Name",
+                    textHint: "e.g. Maxwell",
+                    width: widthDevice / 1.4,
+                    validator: (text) {
+                      if (text.toString().isEmpty) {
+                        return "First name is required";
+                      }
+                      int? parsedValue = int.tryParse(text);
+                      if (parsedValue != null) {
+                        return 'Your name cannot be a number';
+                      }
+                      if (RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(text)) {
+                        return 'Your name should not contain special characters.i.e. [!@#\$%^&*(),.?":{}|<>]';
+                      }
+                    },
+                  ),
+                  TextForm(
+                    controller: _lastNameController,
+                    label: "Last Name",
+                    textHint: "e.g. Ndungu",
+                    width: widthDevice / 1.4,
+                    validator: (text) {
+                      int? parsedValue = int.tryParse(text);
+                      if (parsedValue != null) {
+                        return 'your name cannot be a number';
+                      }
+                      if (RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(text)) {
+                        return 'Your name should not contain special characters.i.e. [!@#\$%^&*(),.?":{}|<>]';
+                      }
+                    },
+                  ),
+                  TextForm(
+                    controller: _emailController,
+                    label: "Email",
+                    textHint: "e.g. ndungumaxwell057@gmail.com",
+                    width: widthDevice / 1.4,
+                    validator: (text) {
+                      if (text.toString().isEmpty) {
+                        return "Email is required";
+                      }
+                      if (!EmailValidator.validate(text)) {
+                        return 'Enter a valid e-mail';
+                      }
+                    },
+                  ),
+                  TextForm(
+                    controller: _phoneController,
+                    label: "Phone number",
+                    textHint: "e.g. 0743904449",
+                    width: widthDevice / 1.4,
+                    validator: (text) {
+                      if (text.toString().isEmpty) {
+                        return null;
+                      } else {
+                        int? parsedValue = int.tryParse(text);
+                        if (parsedValue == null) {
+                          return 'Enter a valid number';
+                        }
+                        if (text.toString().length != 10) {
+                          return 'Enter a valid number';
+                        }
+                      }
+                    },
+                  ),
+                  TextForm(
+                    controller: _messageController,
+                    label: "Message",
+                    textHint: " minimum of 20 words",
+                    width: widthDevice / 1.4,
+                    maxLines: 10,
+                    validator: (text) {
+                      if (text.toString().isEmpty) {
+                        return "Message is required";
+                      }
+                      List<String> words = text.trim().split(RegExp(r'\s+'));
+                      if (words.length < 20) {
+                        return 'message should have a minimum of 20 words';
+                      }
+                    },
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      formKey.currentState?.validate();
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    height: 60.0,
+                    minWidth: widthDevice / 2.2,
+                    color: Colors.tealAccent,
+                    child: const SizedText(
+                      size: 20.0,
+                      text: "Submit",
+                    ),
+                  )
+                ],
+              ),
             ),
-            const SizedBox(height: 90.0,),
+            const SizedBox(
+              height: 90.0,
+            ),
           ],
         ),
       ),

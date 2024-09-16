@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -140,18 +141,27 @@ class _AboutMobileState extends State<AboutMobile> {
                         "About Me",
                         style: TextStyle(fontSize: 40.0),
                       ),
-                      const Text(
-                        "Hello! I'm Maxwell Ndungu. I specialize in flutter development",
-                        style: TextStyle(fontSize: 15.0),
+                      StreamBuilder<DocumentSnapshot>(
+                          stream: FirebaseFirestore.instance.collection("details").doc('tdUfdodi8b6sKHSOqmWO').snapshots(),
+                          builder: (context,snapshot){
+                            if(snapshot.hasError){
+                              return Text("Error: ${snapshot.error}");
+                            }
+                            if(snapshot.hasData){
+                              String data= snapshot.data!['about'];
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                                child: SizedText(text: data, size: 15.0),
+                              );
+                            }
+                            else{
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          }
                       ),
-                      const Text(
-                        "I strive to ensure astounding performance with state of ",
-                        style: TextStyle(fontSize: 15.0),
-                      ),
-                      const Text(
-                        "the art security for Android, Ios, Web, Mac, Linux",
-                        style: TextStyle(fontSize: 15.0),
-                      ),
+
                       const SizedBox(
                         height: 10.0,
                       ),
