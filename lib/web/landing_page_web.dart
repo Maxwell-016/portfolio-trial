@@ -380,6 +380,7 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                             TextForm(
                                 controller: _emailController,
                                 label: "Email",
+                                inputType: TextInputType.emailAddress,
                                 textHint: "e.g. ndungumaxwell057@gmail.com",
                                 width: deviceWidth / 2.4,
                               validator: (text){
@@ -394,6 +395,7 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                             TextForm(
                                 controller: _phoneController,
                                 label: "Phone number",
+                                inputType: TextInputType.phone,
                                 textHint: "e.g. 0743904449",
                                 width: deviceWidth / 2.4,
                                 validator: (text){
@@ -418,7 +420,7 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                         TextForm(
                           controller: _messageController,
                           label: "Message",
-                          textHint: " minimum of 20 words",
+                          textHint: " minimum of 5 words",
                           width: (deviceWidth / 1.2) + 50.0,
                           maxLines: 5,
                           validator: (text){
@@ -426,17 +428,27 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                               return "Message is required";
                             }
                             List<String> words = text.trim().split(RegExp(r'\s+'));
-                            if(words.length < 20){
-                              return 'message should have a minimum of 20 words';
+                            if(words.length < 5){
+                              return 'message should have a minimum of 5 words';
                             }
                           },
                         ),
                         Container(
                           margin: const EdgeInsets.only(left: 200.0),
                           child: MaterialButton(
-                            onPressed: () {
-                              formKey.currentState!.validate();
-                              logger.d(_firstNameController.text);
+                            onPressed: () async{
+                              final addData = AddData();
+                              if(formKey.currentState!.validate()){
+                                await addData.addDetails(
+                                    _firstNameController.text,
+                                    _lastNameController.text,
+                                    _emailController.text,
+                                    _phoneController.text,
+                                    _messageController.text);
+                                formKey.currentState!.reset();
+                                dialogError(context);
+                              }
+                              //logger.d(_firstNameController.text);
                             },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),

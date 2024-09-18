@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 class TabsMobile extends StatefulWidget {
@@ -162,7 +164,7 @@ class _AnimatedCardDelayedState extends State<AnimatedCardDelayed>
       ..addListener(() {
         if (mounted) setState(() {});
       });
-    _animation = Tween(begin: const Offset(0, 0), end: Offset(0, 0.2))
+    _animation = Tween(begin: const Offset(0, 0), end: const Offset(0, 0.2))
         .animate(_controller);
   }
 
@@ -170,7 +172,7 @@ class _AnimatedCardDelayedState extends State<AnimatedCardDelayed>
   void dispose() {
     // TODO: implement dispose
     // _controller.stop();
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -191,9 +193,9 @@ class _AnimatedCardDelayedState extends State<AnimatedCardDelayed>
             children: [
               Image.asset(
                 widget.path,
-                height: widget.height == null ? 200 : widget.height,
-                width: widget.width == null ? 200 : widget.width,
-                fit: widget.fit == null ? null : widget.fit,
+                height: widget.height ?? 200,
+                width: widget.width ?? 200,
+                fit: widget.fit,
               ),
               const SizedBox(
                 height: 30.0,
@@ -285,6 +287,7 @@ class TextForm extends StatelessWidget {
   final maxLines;
   final controller;
   final validator;
+  final inputType;
 
   const TextForm({super.key,
     required this.label,
@@ -292,7 +295,9 @@ class TextForm extends StatelessWidget {
     required this.width,
     this.maxLines,
     this.controller,
-    this.validator});
+    this.validator,
+    this.inputType,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -302,7 +307,11 @@ class TextForm extends StatelessWidget {
         validator: validator == null ? null : validator,
         controller: controller == null ? null : controller,
         maxLines: maxLines == null ? null :maxLines,
+        keyboardType: inputType == null? null: inputType,
         decoration: InputDecoration(
+          errorStyle: const TextStyle(
+            overflow: TextOverflow.visible,
+          ),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
               borderSide: const BorderSide(color: Colors.red, width: 1.0),
@@ -328,7 +337,6 @@ class TextForm extends StatelessWidget {
   }
 }
 
-
 class AbelCustom extends StatelessWidget {
   final String text;
   final double size;
@@ -353,3 +361,26 @@ class AbelCustom extends StatelessWidget {
     );
   }
 }
+
+class AddData{
+  var logger=Logger();
+  CollectionReference details=FirebaseFirestore.instance.collection("Customer details");
+  Future<void> addDetails(final firstName,final lastName,final email,final phoneNumber,final message){
+    return details.add({
+      'First Name': firstName,
+      'Last Name': lastName,
+      'Email': email,
+      'Phone Number': phoneNumber,
+      'Message':message
+    }).then((success)=>logger.d("Success")).catchError((error)=>logger.d(error));
+  }
+}
+
+Future dialogError(BuildContext context){
+  return showDialog(context: context,
+      builder: (BuildContext context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        title: const SizedText(size: 20,text: "Submitted Successfully",weight: FontWeight.w600,),
+      ));
+}
+

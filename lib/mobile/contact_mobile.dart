@@ -147,7 +147,7 @@ class _ContactMobileState extends State<ContactMobile> {
                             return 'Your name cannot be a number';
                           }
                           if (RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(text)) {
-                            return 'Your name should not contain special characters.i.e. [!@#\$%^&*(),.?":{}|<>]';
+                            return 'Remove special characters.i.e.[!@#\$%^&*(),.?":{}|<>]';
                           }
                         },
                       ),
@@ -162,13 +162,14 @@ class _ContactMobileState extends State<ContactMobile> {
                             return 'your name cannot be a number';
                           }
                           if (RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(text)) {
-                            return 'Your name should not contain special characters.i.e. [!@#\$%^&*(),.?":{}|<>]';
+                            return 'Remove special characters.i.e.[!@#\$%^&*(),.?":{}|<>]';
                           }
                         },
                       ),
                       TextForm(
                         controller: _emailController,
                         label: "Email",
+                        inputType: TextInputType.emailAddress,
                         textHint: "e.g. ndungumaxwell057@gmail.com",
                         width: widthDevice / 1.4,
                         validator: (text) {
@@ -183,6 +184,7 @@ class _ContactMobileState extends State<ContactMobile> {
                       TextForm(
                         controller: _phoneController,
                         label: "Phone number",
+                        inputType: TextInputType.phone,
                         textHint: "e.g. 0743904449",
                         width: widthDevice / 1.4,
                         validator: (text) {
@@ -202,7 +204,7 @@ class _ContactMobileState extends State<ContactMobile> {
                       TextForm(
                         controller: _messageController,
                         label: "Message",
-                        textHint: " minimum of 20 words",
+                        textHint: " minimum of 5 words",
                         width: widthDevice / 1.4,
                         maxLines: 10,
                         validator: (text) {
@@ -210,14 +212,25 @@ class _ContactMobileState extends State<ContactMobile> {
                             return "Message is required";
                           }
                           List<String> words = text.trim().split(RegExp(r'\s+'));
-                          if (words.length < 20) {
-                            return 'message should have a minimum of 20 words';
+                          if (words.length < 5) {
+                            return 'message has less than 5 words';
                           }
                         },
                       ),
                       MaterialButton(
-                        onPressed: () {
-                          formKey.currentState?.validate();
+                        onPressed: () async{
+                          final addData = AddData();
+                          if(formKey.currentState!.validate()){
+                            await addData.addDetails(
+                                _firstNameController.text,
+                                _lastNameController.text,
+                                _emailController.text,
+                                _phoneController.text,
+                                _messageController.text);
+                            formKey.currentState!.reset();
+                            dialogError(context);
+                          }
+                          //logger.d(_firstNameController.text);
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
