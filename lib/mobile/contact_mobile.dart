@@ -229,11 +229,13 @@ class _ContactMobileState extends State<ContactMobile> {
                                 _messageController.text);
 
                             dialogError(context);
-                            _firstNameController.clear();
-                            _lastNameController.clear();
-                            _emailController.clear();
-                            _phoneController.clear();
-                            _messageController.clear();
+                            setState(() {
+                              _firstNameController.clear();
+                              _lastNameController.clear();
+                              _emailController.clear();
+                              _phoneController.clear();
+                              _messageController.clear();
+                            });
                           }
                           //logger.d(_firstNameController.text);
                         },
