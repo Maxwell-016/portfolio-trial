@@ -406,8 +406,13 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                             _emailController.text,
                             _phoneController.text,
                             _messageController.text);
-                        formKey.currentState!.reset();
+
                         dialogError(context);
+                        _firstNameController.clear();
+                        _lastNameController.clear();
+                        _emailController.clear();
+                        _phoneController.clear();
+                        _messageController.clear();
                       }
                       //logger.d(_firstNameController.text);
                     },

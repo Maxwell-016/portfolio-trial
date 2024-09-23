@@ -224,7 +224,7 @@ class _AboutWebState extends State<AboutWeb> {
            Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const AnimatedCard(
+              const AnimatedCardDelayed(
                 path: "assets/appDev.png",
                 width: 300,
                 height: 300,

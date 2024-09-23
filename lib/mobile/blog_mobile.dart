@@ -135,6 +135,9 @@ class _BlogMobileState extends State<BlogMobile> {
           body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection("articles").snapshots(),
             builder: (context, snapshot) {
+              if(snapshot.hasError){
+                return Text("Error: ${snapshot.error}");
+              }
               if (snapshot.hasData) {
                 return ListView.builder(
                   itemCount: snapshot.data!.docs.length,

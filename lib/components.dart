@@ -79,7 +79,7 @@ class _AnimatedCardState extends State<AnimatedCard>
   void dispose() {
     // TODO: implement dispose
     // _controller.stop();
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -105,9 +105,9 @@ class _AnimatedCardState extends State<AnimatedCard>
             children: [
               Image.asset(
                 widget.path,
-                height: widget.height == null ? 200.0 : widget.height,
-                width: widget.width == null ? 200.0 : widget.width,
-                fit: widget.fit == null ? null : widget.fit,
+                height: widget.height ?? 200.0,
+                width: widget.width ?? 200.0,
+                fit: widget.fit,
               ),
               const SizedBox(
                 height: 30.0,
@@ -115,7 +115,7 @@ class _AnimatedCardState extends State<AnimatedCard>
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: widget.text == null
-                    ? SizedBox()
+                    ? const SizedBox()
                     : SizedText(text: widget.text, size: 20),
               ),
             ],
