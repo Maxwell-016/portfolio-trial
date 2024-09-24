@@ -364,7 +364,7 @@ class AbelCustom extends StatelessWidget {
 
 class AddData{
   var logger=Logger();
-  CollectionReference details=FirebaseFirestore.instance.collection("Customer details");
+  CollectionReference details=FirebaseFirestore.instance.collection("customerDetails");
   Future<void> addDetails(final firstName,final lastName,final email,final phoneNumber,final message){
     return details.add({
       'First Name': firstName,
