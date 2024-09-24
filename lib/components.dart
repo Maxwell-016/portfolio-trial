@@ -260,8 +260,9 @@ class SizedText extends StatefulWidget {
   final String text;
   final double size;
   final weight;
+  final color;
   const SizedText(
-      {super.key, required this.text, required this.size, this.weight});
+      {super.key, required this.text, required this.size, this.weight, this.color});
 
   @override
   State<SizedText> createState() => _SizedTextState();
@@ -275,7 +276,8 @@ class _SizedTextState extends State<SizedText> {
       overflow: TextOverflow.visible,
       style: TextStyle(
           fontSize: widget.size,
-          fontWeight: widget.weight == null ? null : widget.weight),
+          color: widget.color,
+          fontWeight: widget.weight),
     );
   }
 }
@@ -365,22 +367,29 @@ class AbelCustom extends StatelessWidget {
 class AddData{
   var logger=Logger();
   CollectionReference details=FirebaseFirestore.instance.collection("customerDetails");
-  Future<void> addDetails(final firstName,final lastName,final email,final phoneNumber,final message){
+  Future addDetails(final firstName,final lastName,final email,final phoneNumber,final message){
     return details.add({
       'First Name': firstName,
       'Last Name': lastName,
       'Email': email,
       'Phone Number': phoneNumber,
       'Message':message
-    }).then((success)=>logger.d("Success")).catchError((error)=>logger.d(error));
+    }).then((success){
+      logger.d("Success");
+      return true;
+    }).catchError((error){
+      logger.d(error);
+      return false;
+    });
   }
 }
 
-Future dialogError(BuildContext context){
+Future dialogError(BuildContext context,String title,Color color,Color fontColor){
   return showDialog(context: context,
       builder: (BuildContext context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        title: const SizedText(size: 20,text: "Submitted Successfully",weight: FontWeight.w600,),
+        title: Center(child: SizedText(size: 20,text: title,weight: FontWeight.w600,color: fontColor)),
+        backgroundColor: color,
       ));
 }
 

@@ -439,21 +439,24 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                             onPressed: () async{
                               final addData = AddData();
                               if(formKey.currentState!.validate()){
-                                await addData.addDetails(
+                                if(await addData.addDetails(
                                     _firstNameController.text,
                                     _lastNameController.text,
                                     _emailController.text,
                                     _phoneController.text,
-                                    _messageController.text);
-
-                                dialogError(context);
-                                setState(() {
-                                  _firstNameController.clear();
-                                  _lastNameController.clear();
-                                  _emailController.clear();
-                                  _phoneController.clear();
-                                  _messageController.clear();
-                                });
+                                    _messageController.text)){
+                                  dialogError(context,"Message sent successfully",Colors.white,Colors.black);
+                                  setState(() {
+                                    _firstNameController.clear();
+                                    _lastNameController.clear();
+                                    _emailController.clear();
+                                    _phoneController.clear();
+                                    _messageController.clear();
+                                  });
+                                }
+                                else{
+                                  dialogError(context, "Message not sent", Colors.red,Colors.white);
+                                }
                               }
                               //logger.d(_firstNameController.text);
                             },
